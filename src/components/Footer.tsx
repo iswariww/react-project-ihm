@@ -1,11 +1,25 @@
 import React from "react";
 
 const Footer: React.FC = () => {
+  const handleClick = (name: string, type: string) => {
+    const eventData = {
+      event: "click",
+      elementName: name,
+      elementType: type,
+    };
+    window.dataLayer?.push(eventData);
+    console.log("GTM Event pushed:", eventData);
+  };
+
   return (
     <footer className="bg-gray-100">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex justify-center space-x-6 md:order-2">
-          <a href="#" className="text-gray-400 hover:text-gray-500">
+          <a
+            href="#"
+            className="text-gray-400 hover:text-gray-500"
+            onClick={() => handleClick("Facebook", "social_link")}
+          >
             <span className="sr-only">Facebook</span>
             <svg
               className="h-6 w-6"
@@ -20,7 +34,11 @@ const Footer: React.FC = () => {
               />
             </svg>
           </a>
-          <a href="#" className="text-gray-400 hover:text-gray-500">
+          <a
+            href="#"
+            className="text-gray-400 hover:text-gray-500"
+            onClick={() => handleClick("X", "social_link")}
+          >
             <span className="sr-only">X</span>
             <svg
               className="h-6 w-6"
@@ -31,7 +49,11 @@ const Footer: React.FC = () => {
               <path d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z" />
             </svg>
           </a>
-          <a href="#" className="text-gray-400 hover:text-gray-500">
+          <a
+            href="#"
+            className="text-gray-400 hover:text-gray-500"
+            onClick={() => handleClick("GitHub", "social_link")}
+          >
             <span className="sr-only">GitHub</span>
             <svg
               className="h-6 w-6"
@@ -46,7 +68,11 @@ const Footer: React.FC = () => {
               />
             </svg>
           </a>
-          <a href="#" className="text-gray-400 hover:text-gray-500">
+          <a
+            href="#"
+            className="text-gray-400 hover:text-gray-500"
+            onClick={() => handleClick("LinkedIn", "social_link")}
+          >
             <span className="sr-only">LinkedIn</span>
             <svg
               className="h-6 w-6"

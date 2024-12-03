@@ -1,6 +1,21 @@
 import React from "react";
 
 const Hero: React.FC = () => {
+  const handleClick = (name: string, type: string) => {
+    const eventData = {
+      event: "click",
+      elementName: name,
+      elementType: type,
+    };
+
+    if (window.dataLayer) {
+      window.dataLayer.push(eventData);
+      console.log("GTM Event pushed:", eventData);
+    } else {
+      console.warn("GTM dataLayer not found");
+    }
+  };
+
   return (
     <div className="relative bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -23,6 +38,7 @@ const Hero: React.FC = () => {
                   <a
                     href="#"
                     className="w-full flex items-center justify-center px-8 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-3 md:text-lg md:px-10"
+                    onClick={() => handleClick("Get started", "cta_button")}
                   >
                     Get started
                   </a>
@@ -31,6 +47,7 @@ const Hero: React.FC = () => {
                   <a
                     href="#features"
                     className="w-full flex items-center justify-center px-8 py-2 border border-indigo-600 text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 md:py-3 md:text-lg md:px-10"
+                    onClick={() => handleClick("Learn more", "cta_button")}
                   >
                     Learn more
                   </a>
