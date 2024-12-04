@@ -1,11 +1,16 @@
 import React from "react";
+import { trackButtonClick, CTAButtons } from "../utils/analytics";
 
 const Hero: React.FC = () => {
-  const handleClick = (name: string, type: string) => {
+  const handleClick = (buttonName: string) => {
+    // Use our analytics tracking
+    trackButtonClick(buttonName);
+
+    // Keep the existing GTM push for backwards compatibility
     const eventData = {
       event: "click",
-      elementName: name,
-      elementType: type,
+      elementName: buttonName,
+      elementType: "cta_button",
     };
 
     if (window.dataLayer) {
@@ -35,34 +40,25 @@ const Hero: React.FC = () => {
               </p>
               <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                 <div className="rounded-md shadow">
-                  <a
-                    href="#"
-                    className="w-full flex items-center justify-center px-8 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-3 md:text-lg md:px-10"
-                    onClick={() => handleClick("Get started", "cta_button")}
+                  <button
+                    onClick={() => handleClick(CTAButtons.GET_STARTED)}
+                    className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
                   >
                     Get started
-                  </a>
+                  </button>
                 </div>
                 <div className="mt-3 sm:mt-0 sm:ml-3">
-                  <a
-                    href="#features"
-                    className="w-full flex items-center justify-center px-8 py-2 border border-indigo-600 text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 md:py-3 md:text-lg md:px-10"
-                    onClick={() => handleClick("Learn more", "cta_button")}
+                  <button
+                    onClick={() => handleClick(CTAButtons.LEARN_MORE)}
+                    className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"
                   >
                     Learn more
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
           </main>
         </div>
-      </div>
-      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-        <img
-          className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-          src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-          alt="Team collaborating on a project"
-        />
       </div>
     </div>
   );

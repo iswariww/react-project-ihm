@@ -14,13 +14,34 @@ import {
 
 const App: React.FC = () => {
   useEffect(() => {
-    // Start tracking main page
+    let intervalId: ReturnType<typeof setInterval>; // Declare interval ID outside
+
+    // Start tracking when component mounts
     startPageTracking("home");
 
-    // Set up cleanup
-    return () => {
+    // Set up analytics check with initial delay
+    const analyticsTimer = setTimeout(() => {
+      // First check
       endPageTracking();
-      // Log summary when component unmounts
+      getAnalyticsSummary();
+
+      // Start interval immediately after first check
+      intervalId = setInterval(() => {
+        console.log(
+          "Analytics interval triggered at:",
+          new Date().toLocaleTimeString()
+        );
+        endPageTracking();
+        getAnalyticsSummary();
+        startPageTracking("home");
+      }, 15000);
+    }, 11000);
+
+    // Cleanup function
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+      clearTimeout(analyticsTimer);
+      endPageTracking();
       getAnalyticsSummary();
     };
   }, []);

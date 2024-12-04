@@ -1,12 +1,16 @@
 import React from "react";
-import { trackButtonClick } from "../utils/analytics";
+import { trackButtonClick, CTAButtons } from "../utils/analytics";
 
 const CallToAction: React.FC = () => {
-  const handleClick = (name: string, type: string) => {
+  const handleClick = (buttonName: string) => {
+    // Track the button click using our analytics
+    trackButtonClick(buttonName);
+
+    // Keep the existing GTM push
     const eventData = {
       event: "click",
-      elementName: name,
-      elementType: type,
+      elementName: buttonName,
+      elementType: "cta_button",
     };
 
     if (window.dataLayer) {
@@ -30,7 +34,7 @@ const CallToAction: React.FC = () => {
           </p>
           <div className="mt-8">
             <button
-              onClick={() => handleClick("Start Free Trial", "cta_button")}
+              onClick={() => handleClick(CTAButtons.START_TRIAL)}
               className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
             >
               Start Free Trial
