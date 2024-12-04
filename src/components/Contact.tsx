@@ -76,6 +76,17 @@ const Contact: React.FC = () => {
           Have questions? We'd love to hear from you.
         </p>
         <div className="mt-8">
+          {submitStatus.message && (
+            <div
+              className={`mb-4 p-4 rounded-md ${
+                submitStatus.type === "success"
+                  ? "bg-green-50 text-green-700"
+                  : "bg-red-50 text-red-700"
+              }`}
+            >
+              {submitStatus.message}
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label
@@ -153,17 +164,6 @@ const Contact: React.FC = () => {
                 Send Message
               </button>
             </div>
-            {submitStatus.message && (
-              <div
-                className={`mt-4 p-4 rounded-md ${
-                  submitStatus.type === "success"
-                    ? "bg-green-50 text-green-700"
-                    : "bg-red-50 text-red-700"
-                }`}
-              >
-                {submitStatus.message}
-              </div>
-            )}
           </form>
         </div>
       </div>
