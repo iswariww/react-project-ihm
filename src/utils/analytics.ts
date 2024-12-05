@@ -110,8 +110,6 @@ function updatePageTime(pageName: string, timeSpent: number) {
 
 // Track button clicks with GTM integration
 export function trackButtonClick(buttonName: string) {
-  console.log("Button clicked:", buttonName);
-
   const existing = buttonClicks.get(buttonName);
   const now = new Date();
 
@@ -122,7 +120,6 @@ export function trackButtonClick(buttonName: string) {
   };
 
   buttonClicks.set(buttonName, newData);
-  console.log("Updated button clicks:", Array.from(buttonClicks.entries()));
 
   // Push click event to GTM
   window.dataLayer?.push({
