@@ -1,3 +1,16 @@
+/**
+ * UserContext
+ *
+ * This file defines a React context for managing and providing user-specific data throughout the application.
+ *
+ * The context provides information such as:
+ * - Browser language
+ * - Local time and timezone
+ * - Geographic location (coordinates)
+ *
+ * This setup allows components to access and display user-specific information easily.
+ */
+
 import React, {
   createContext,
   useContext,
@@ -6,6 +19,7 @@ import React, {
   useRef,
 } from "react";
 
+// Define the shape of the user data
 interface UserContextType {
   location: {
     coordinates: { latitude: number; longitude: number } | null;
@@ -22,6 +36,7 @@ interface UserContextType {
   };
 }
 
+// Create the UserContext with an undefined default value
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 // Helper function to get time of day
@@ -47,6 +62,7 @@ const initializeUserData = (): UserContextType => ({
   },
 });
 
+// Function to request location permission and get the user's location
 const requestLocationPermission = async () => {
   try {
     // First, check if geolocation is available
@@ -79,6 +95,7 @@ const requestLocationPermission = async () => {
   }
 };
 
+// UserProvider component to wrap the application and provide user data
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {

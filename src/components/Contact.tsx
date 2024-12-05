@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
+// Define a functional component for the Contact form section
 const Contact: React.FC = () => {
+  // State to manage form input values
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -8,30 +10,35 @@ const Contact: React.FC = () => {
     message: "",
   });
 
+  // State to manage form submission status and feedback messages
   const [submitStatus, setSubmitStatus] = useState<{
     type: "success" | "error" | null;
     message: string;
   }>({ type: null, message: "" });
 
+  // Handler for form input changes
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: value, // Update the specific field while keeping other fields unchanged
     }));
   };
 
+  // Handler for form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent default form submission behavior
 
+    // Validate that all required fields are filled
     if (
       !formData.name ||
       !formData.email ||
       !formData.subject ||
       !formData.message
     ) {
+      // Push error event to Google Tag Manager
       const errorEvent = {
         event: "form_submission_error",
         formName: "contact_form",
@@ -39,6 +46,8 @@ const Contact: React.FC = () => {
       };
       window.dataLayer?.push(errorEvent);
       console.log("GTM Event pushed:", errorEvent);
+
+      // Show error message to user
       setSubmitStatus({
         type: "error",
         message: "Please fill in all fields.",
@@ -46,6 +55,7 @@ const Contact: React.FC = () => {
       return;
     }
 
+    // Push successful submission event to Google Tag Manager
     const successEvent = {
       event: "form_submission",
       formName: "contact_form",
@@ -54,6 +64,7 @@ const Contact: React.FC = () => {
     window.dataLayer?.push(successEvent);
     console.log("GTM Event pushed:", successEvent);
 
+    // Reset form and show success message
     setFormData({ name: "", email: "", subject: "", message: "" });
     setSubmitStatus({
       type: "success",
@@ -66,9 +77,11 @@ const Contact: React.FC = () => {
     }, 5000);
   };
 
+  // Render the contact form
   return (
     <div className="bg-white py-16 px-4 sm:px-6 lg:px-8" id="contact">
       <div className="max-w-lg mx-auto">
+        {/* Form header section */}
         <h2 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">
           Contact Us
         </h2>
@@ -76,6 +89,7 @@ const Contact: React.FC = () => {
           Have questions? We'd love to hear from you.
         </p>
         <div className="mt-8">
+          {/* Status message display (success/error) */}
           {submitStatus.message && (
             <div
               className={`mb-4 p-4 rounded-md ${
@@ -87,7 +101,9 @@ const Contact: React.FC = () => {
               {submitStatus.message}
             </div>
           )}
+          {/* Contact form */}
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Name input field */}
             <div>
               <label
                 htmlFor="name"
@@ -105,6 +121,7 @@ const Contact: React.FC = () => {
                 onChange={handleChange}
               />
             </div>
+            {/* Email input field */}
             <div>
               <label
                 htmlFor="email"
@@ -122,6 +139,7 @@ const Contact: React.FC = () => {
                 onChange={handleChange}
               />
             </div>
+            {/* Subject input field */}
             <div>
               <label
                 htmlFor="subject"
@@ -139,6 +157,7 @@ const Contact: React.FC = () => {
                 onChange={handleChange}
               />
             </div>
+            {/* Message textarea field */}
             <div>
               <label
                 htmlFor="message"
@@ -156,6 +175,7 @@ const Contact: React.FC = () => {
                 onChange={handleChange}
               ></textarea>
             </div>
+            {/* Submit button */}
             <div>
               <button
                 type="submit"
